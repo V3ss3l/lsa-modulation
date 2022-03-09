@@ -3,17 +3,17 @@ package lsa.modeling;
 import lsa.model.Entity;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class ModelingGsa {
     private HashMap<Integer, Entity> entityHashMap;
+    public Map map;
 
     public ModelingGsa(HashMap<Integer, Entity> entityHashMap) {
         this.entityHashMap = entityHashMap;
-        //TODO дописать сортировку
-        for(int i = 0; i < entityHashMap.size(); i++){
-            entityHashMap.get(i);
-        }
+        map = new TreeMap<>(entityHashMap); // сортировка
     }
 
     public Entity getResultFromModeling() {
@@ -28,5 +28,6 @@ public class ModelingGsa {
 
             }
         }
+        return new Entity()
     }
 }

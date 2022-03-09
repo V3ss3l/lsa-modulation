@@ -1,5 +1,6 @@
 package lsa;
 
+import lsa.modeling.ModelingGsa;
 import lsa.streams.BeginData;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ public class Main {
         var beginData = new BeginData();
 
         try {
-            beginData.getFromFile("Тест.txt");
+            var a = beginData.getFromFile("Тест.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
