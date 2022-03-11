@@ -11,9 +11,9 @@ public class Main {
         var beginData = new BeginData();
 
         try {
-            var dataFromFile = beginData.getFromFile("Тест.txt");
+            var dataFromFile = beginData.getFromFile("ЛСАБарановскийДА.txt");
             var MG = new ModelingGsa(dataFromFile);
-            var s = MG.getResultFromString("10110");
+            var s = MG.getResultFromString("1010");
             System.out.println(s);
         } catch (IOException e) {
             e.printStackTrace();

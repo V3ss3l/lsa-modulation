@@ -3,7 +3,6 @@ package lsa.util;
 import lsa.model.Entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class EntityParser {
 
