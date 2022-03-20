@@ -1,4 +1,5 @@
 package lsa.modeling;
+import java.util.Scanner;
 
 import lsa.model.Entity;
 
@@ -32,8 +33,13 @@ public class ModelingGsa {
         var isFirst = true;
         var listX = new ArrayList<Integer>();
         txt = new StringBuilder();
-
-        for (var j = 0; j < arrayEntity.length; j++) {  // возможно нужно найти последний x
+        var j = 0;
+        for (var i = 0; i < arrayEntity.length; i++) {
+            if (arrayEntity[i].getSymbol() == 'x') {
+                searchX(i+1);
+            }
+        }
+        /*while(true) {  // возможно нужно найти последний x
             j = searchX(j);
             stage = arrayEntity[j].getStage();
 
@@ -41,9 +47,28 @@ public class ModelingGsa {
                 listX.add(arrayEntity[j].getStage());
                 isFirst = false;
                 j = searchS(j + 1);
-            } else {
-
+            } else if (!isFirst && listX.contains(stage)) {
+                isFirst = true;
+                j++;
             }
+        }*/
+    }
+
+    public void writeStep(){
+        var j = 0;
+        txt = new StringBuilder();
+        while (true) {
+            Scanner sc = new Scanner(System.in); // вводимый символ, нужно проверка на то, что это число только 0 или 1
+            j = searchX(j);
+            System.out.println(txt);
+            if (j == arrayEntity.length) return;//txt.toString();
+
+            if (sc.nextInt() == 0 && j != arrayEntity.length) j = searchS(j + 1);
+            else if (j == arrayEntity.length) return; // txt.toString();
+            else j++;
+
+            if(arrayEntity[j].getSymbol() != 'Y' && !arrayEntity[j].isBegin() && arrayEntity[j].getStage() == 0)
+                break;
         }
     }
 
