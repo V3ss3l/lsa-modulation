@@ -11,7 +11,7 @@ public class Main {
         var beginData = new BeginData();
 
         try {
-            var dataFromFile = beginData.getFromFile("ЛСАБарановскийДА.txt");
+            var dataFromFile = beginData.getFromFile("ЛСАБарановскийДВ.txt");
             var MG = new ModelingGsa(dataFromFile);
             MG.writeStep();
             // System.out.println(s);

@@ -54,6 +54,7 @@ public class ModelingGsa {
         }*/
     }
 
+    // при вводе значения писать на каком x находимся в данном моменте!!!!
     public void writeStep(){
         var j = 0;
         txt = new StringBuilder();
@@ -61,10 +62,10 @@ public class ModelingGsa {
             Scanner sc = new Scanner(System.in); // вводимый символ, нужно проверка на то, что это число только 0 или 1
             j = searchX(j);
             System.out.println(txt);
-            if (j == arrayEntity.length) return;//txt.toString();
+            if (j == arrayEntity.length) return;
 
             if (sc.nextInt() == 0 && j != arrayEntity.length) j = searchS(j + 1);
-            else if (j == arrayEntity.length) return; // txt.toString();
+            else if (j == arrayEntity.length) return;
             else j++;
 
             if(arrayEntity[j].getSymbol() != 'Y' && !arrayEntity[j].isBegin() && arrayEntity[j].getStage() == 0)

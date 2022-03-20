@@ -14,6 +14,7 @@ public class EntityParser {
         var number = 0;
         var begin = false;
 
+        checkBeginFinish(str);
         for (var s : strArr) {
             if (s.contains("S")) {
                 for (int i = 0; i < s.length(); i++) {
@@ -49,6 +50,21 @@ public class EntityParser {
         }
 
         return toArray(list);
+    }
+    //нужно прописать ошибку
+    private static void checkBeginFinish(String str) {
+        var startY = str.charAt(0);
+        var endY = str.charAt(str.length() - 2);
+        var endN = str.charAt(str.length() - 1);
+
+        if ((startY == 'Y' || startY == 'y' || startY == 'У' || startY == 'у')
+                && (str.charAt(1) == 'н' || str.charAt(1) == 'Н')
+                && (endY == 'Y' || endY == 'y' || endY == 'У' || endY == 'у')
+                && (endN == 'К' || endN == 'к')
+        ) {
+            return;
+        }
+        // throw new Exception("ds");
     }
 
     public static Entity[] toArray(ArrayList<Entity> list) {
