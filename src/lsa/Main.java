@@ -9,11 +9,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException { // убрать throws IOException
         var beginData = new BeginData();
         Scanner sc = new Scanner(System.in);
         System.out.println("_Modulation program_" + "\nBy brigade №1");
-        init(beginData, sc);
+        var bd = beginData.getFromFile("ЛСАБарановскийДА.txt");
+        var mc = new ModelingGsa(bd);
+        mc.iteratingLogicalConditions();
+        // init(beginData, sc);
     }
 
     public static void init(BeginData beginData, Scanner sc){

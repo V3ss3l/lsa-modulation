@@ -1,74 +1,59 @@
 package lsa.modeling;
-import java.util.Scanner;
 
 import lsa.model.Entity;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class ModelingGsa {
-    private Entity[] arrayEntity; // final?
+    private final Entity[] arrayEntity;
     private StringBuilder txt;
 
     public ModelingGsa(Entity[] arrayEntity) {
         this.arrayEntity = arrayEntity;
     }
 
-    /*public Entity getResultFromModeling() {
-        Scanner sc = new Scanner(System.in);
-        while (true) {
-            String str = sc.nextLine();
-            if (str.length() > 1) break;
-            if(str == "1"){
+    public void iteratingLogicalConditions() {
+        var i = 0;
 
-            }
-            if(str == "0"){
+        while (i < arrayEntity.length) {
 
-            }
+            i = searchXWithoutOutput(i);
+            if (i == arrayEntity.length) return;
+
+            System.out.print("\nДля Х" + arrayEntity[i].getStage() + " :\n\t1: ");
+            txt = new StringBuilder();
+            searchX(i + 1);
+
+            System.out.print(txt + "\n\t0: ");
+            txt = new StringBuilder();
+            searchX(searchS(i + 1));
+            System.out.print(txt);
+
+            i++;
         }
-        return new Entity();
-    }*/
-
-    public void enumeration() {
-        var stage = 0;
-        var isFirst = true;
-        var listX = new ArrayList<Integer>();
-        txt = new StringBuilder();
-        var j = 0;
-        for (var i = 0; i < arrayEntity.length; i++) {
-            if (arrayEntity[i].getSymbol() == 'x') {
-                searchX(i+1);
-            }
-        }
-        /*while(true) {  // возможно нужно найти последний x
-            j = searchX(j);
-            stage = arrayEntity[j].getStage();
-
-            if (isFirst && !listX.contains(stage)) {
-                listX.add(arrayEntity[j].getStage());
-                isFirst = false;
-                j = searchS(j + 1);
-            } else if (!isFirst && listX.contains(stage)) {
-                isFirst = true;
-                j++;
-            }
-        }*/
     }
 
     // при вводе значения писать на каком x находимся в данном моменте!!!!
-    public void writeStep(){
+    public void writeStep() {
         var j = 0;
         txt = new StringBuilder();
+        var i = 0;
         while (true) {
-            Scanner sc = new Scanner(System.in); // вводимый символ, нужно проверка на то, что это число только 0 или 1
             j = searchX(j);
             System.out.println(txt);
             if (j == arrayEntity.length) return;
 
-            if (sc.nextInt() == 0 && j != arrayEntity.length) j = searchS(j + 1);
+            i = searchXWithoutOutput(j);
+            System.out.println("Введите условие для Х" + arrayEntity[i].getStage() + ": ");
+            Scanner sc = new Scanner(System.in); // вводимый символ, нужно проверка на то, что это число только 0 или 1
+            var buff = sc.nextInt();
+
+
+            if (buff == 0 && j != arrayEntity.length) j = searchS(j + 1);
             else if (j == arrayEntity.length) return;
             else j++;
 
-            if(arrayEntity[j].getSymbol() != 'Y' && !arrayEntity[j].isBegin() && arrayEntity[j].getStage() == 0)
+            if (arrayEntity[j].getSymbol() != 'Y' && !arrayEntity[j].isBegin() && arrayEntity[j].getStage() == 0)
                 break;
         }
     }
@@ -95,6 +80,14 @@ public class ModelingGsa {
         return txt.toString();
     }
 
+    private int searchXWithoutOutput(int i){
+        while (arrayEntity[i].getSymbol() != 'X' && arrayEntity[i].getSymbol() != 'x'
+                && arrayEntity[i].getSymbol() != 'х' && arrayEntity[i].getSymbol() != 'Х') {
+            i++;
+            if (i == arrayEntity.length) return i;
+        }
+        return i;
+    }
     private int searchX(int j) {
         while (arrayEntity[j].getSymbol() != 'X' && arrayEntity[j].getSymbol() != 'x'
                 && arrayEntity[j].getSymbol() != 'Х' && arrayEntity[j].getSymbol() != 'х') {
