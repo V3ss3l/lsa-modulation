@@ -51,7 +51,7 @@ public class EntityParser {
             return toArray(list);
         }
         else {
-            System.out.println("Error: ");
+            System.out.println("[Error]: ");
             return new Entity[]{};
         }
 

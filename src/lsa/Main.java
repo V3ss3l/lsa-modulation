@@ -8,72 +8,97 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
+    private static ModelingGsa model;
+    private static Entity[] arr;
+    private final static Scanner sc = new Scanner(System.in);
+    private final static BeginData beginData = new BeginData();
 
-    public static void main(String[] args) throws IOException { // убрать throws IOException
-        var beginData = new BeginData();
-        Scanner sc = new Scanner(System.in);
-        System.out.println("_Modulation program_" + "\nBy brigade №1");
-        var bd = beginData.getFromFile("ЛСАБарановскийДА.txt");
-        var mc = new ModelingGsa(bd);
-        mc.iteratingLogicalConditions();
-        // init(beginData, sc);
+    public static void main(String[] args){
+        System.out.println("_Modulation program_" + "\nBy brigade №1\n");
+        init();
     }
 
-    public static void init(BeginData beginData, Scanner sc){
+    //method of main user interface work
+    public static void init() {
+        typeModel();
         System.out.println("\nOperations:"
                 + "\n1. Modeling by typing each step"
                 + "\n2. Modeling by typing all X conditions"
                 + "\n3. Modeling each condition of X"
-                + "\n4. Exit from program");
-        var str = sc.nextLine();
-        switch (str) {
+                + "\n4. Change the model"
+                + "\n5. Exit from program");
+        var choice = sc.nextLine();
+        switch (choice) {
             case "1": {
-                System.out.println("Which way do you want to model GSA:" + "\nConsole" + "\nFile");
-                if (sc.nextLine() == "Console") {
                     while (true) {
                         System.out.println("Type step: (if you want to exit, type |exit|)");
                         var step = sc.nextLine();
                         if (step == "exit") {
                             break;
                         }
-                        Entity[] arr = beginData.getFromUser(step);
-                        if(arr.length < 1){
-                            break;
-                        }
-                        var model = new ModelingGsa(arr);
                         model.writeStep();
                     }
-                } else {
-                    //написать считывание каждого шага с файла
                 }
                 System.out.println("Modeling is over");
-                init(beginData, sc);
-            }
-            /*case "2": {
-                System.out.println("Which way do you want to model GSA:" + "\nConsole" + "\nFile");
-                if (sc.nextLine() == "Console") {
-                    while (true) {
-                        System.out.println("Type step: (if you want to exit, type |exit|)");
-                        var step = sc.nextLine();
-                        if (step == "exit") {
-                            break;
-                        }
-                        Entity[] arr = beginData.getFromUser(step);
-                        var model = new ModelingGsa(arr);
-                        model.writeStep();
+                init();
+            case "2": {
+                System.out.println("Type conditions: (if you want to exit, type |exit|)");
+                boolean flag = true;
+                String conditions = "";
+                while(flag) {
+                    conditions = sc.nextLine();
+                    if (conditions.equals("exit")) break;
+                    if(conditions.length() > 0) flag = false;
+                    if (conditions.length() < 1) {
+                        System.out.println("[Error]: String is empty, try again");
                     }
-                    System.out.println("Modeling is over");
-                    init(beginData, sc);
                 }
-            }*/
-            case"4": {
+                model.getResultFromString(conditions);
+                System.out.println("Modeling is over");
+                init();
+            }
+            case "3": {
+
+            }
+            case "4": {
+                typeModel();
+            }
+            case "5": {
                 System.out.println("Program is over, shutting down...");
                 break;
             }
             default: {
                 System.out.println("Where is an action?");
-                init(beginData, sc);
+                init();
             }
+        }
+    }
+
+    //method which make an array of entities and model
+    public static void typeModel(){
+        System.out.println("Which way do you want to model GSA: (type |Console| or |File|)" + "\nconsole" + "\nfile");
+        var str = sc.nextLine();
+        if(str.length() < 1) System.out.println();
+        if(str.equals("console")) {
+            System.out.println("Type model: (like X10 or S1 or Y51 or W or Yn or Yk)");
+            var strOfModel = sc.nextLine();
+            arr = beginData.getFromUser(strOfModel);
+        }
+        else if(str.equals("file")){
+            System.out.println("Type name of file: ");
+            var fileName = sc.nextLine();
+            try {
+                arr = beginData.getFromFile(fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        if (arr.length < 1) {
+            System.out.println("[Error]: array is empty, try again");
+            typeModel();
+        }else {
+            System.out.println("Model was successfully made!");
+            model = new ModelingGsa(arr);
         }
     }
 }

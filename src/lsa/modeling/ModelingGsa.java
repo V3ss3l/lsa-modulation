@@ -45,10 +45,13 @@ public class ModelingGsa {
 
             i = searchXWithoutOutput(j);
             System.out.println("Введите условие для Х" + arrayEntity[i].getStage() + ": ");
-            Scanner sc = new Scanner(System.in); // вводимый символ, нужно проверка на то, что это число только 0 или 1
+            Scanner sc = new Scanner(System.in);
             var buff = sc.nextInt();
-
-
+            // вводимый символ, нужно проверка на то, что это число только 0 или 1
+            if(buff!=0 && buff!=1){
+                System.out.println("[Error]: typed symbols arent 0 or 1, please try again");
+                writeStep();
+            }
             if (buff == 0 && j != arrayEntity.length) j = searchS(j + 1);
             else if (j == arrayEntity.length) return;
             else j++;
