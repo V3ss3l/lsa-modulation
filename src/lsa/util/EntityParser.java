@@ -19,7 +19,10 @@ public class EntityParser {
                     for (int i = 0; i < s.length(); i++) {
                         if (!isNumber && s.charAt(i) != 'S') {
                             isNumber = true;
-                            number = Character.getNumericValue(s.charAt(i));
+                            if (!Character.isDigit(s.charAt(i + 2))) {
+                                System.out.println("[Error]: next symbol is not a number, try again");
+                                return new Entity[]{};
+                            } else number = Character.getNumericValue(s.charAt(i));
                         } else if (s.charAt(i) == '1' || s.charAt(i) == '0') begin = s.charAt(i) != '0';
                         else buff = s.charAt(i);
                     }
@@ -28,14 +31,23 @@ public class EntityParser {
                         if (s.charAt(i) == 'у' || s.charAt(i) == 'У' || s.charAt(i) == 'Y') buff = s.charAt(i);
                         else if (s.charAt(i) == 'Н' || s.charAt(i) == 'н') begin = true;
                         else if (s.charAt(i) == 'К' || s.charAt(i) == 'к') begin = false;
-                        else number = Character.getNumericValue(s.charAt(i));
+                        else {
+                            if (!Character.isDigit(s.charAt(i + 1))) {
+                                System.out.println("[Error]: next symbol is not a number, try again");
+                                return new Entity[]{};
+                            } else number = Character.getNumericValue(s.charAt(i));
+                        }
                     }
                 } else if (s.contains("X") || s.contains("Х")) {
                     for (var q = 0; q < s.length(); q++) {
                         if (s.charAt(q) == 'X' || s.charAt(q) == 'x' || s.charAt(q) == 'Х' || s.charAt(q) == 'х')
                             buff = s.charAt(q);
-                        else
-                            number = Character.getNumericValue(s.charAt(q));
+                        else {
+                            if (!Character.isDigit(s.charAt(q + 1))) {
+                                System.out.println("[Error]: next symbol is not a number, try again");
+                                return new Entity[]{};
+                            } else number = Character.getNumericValue(s.charAt(q));
+                        }
                     }
                 } else {
                     list.add(new Entity(s.charAt(0), false, 0));
@@ -47,17 +59,19 @@ public class EntityParser {
                 begin = false;
                 isNumber = false;
             }
-
-            return toArray(list);
-        }
-        else {
-            System.out.println("[Error]: ");
+            Entity[] arr = toArray(list);
+            if(checkSAndW(arr)) return arr;
+            else {
+                System.out.println("[Error]: symbol is not a start or end, try again");
+                return new Entity[]{};
+            }
+        } else {
+            System.out.println("[Error]: symbol is not a start or end, try again");
             return new Entity[]{};
         }
 
     }
 
-    //нужно прописать ошибку
     private static boolean checkBeginFinish(String str) {
         var startY = str.charAt(0);
         var endY = str.charAt(str.length() - 2);
@@ -70,6 +84,17 @@ public class EntityParser {
         ) {
             return true;
         } else return false;
+    }
+
+    private static boolean checkSAndW(Entity[] array) {
+        for (var q = 0; q < array.length; q++) {
+            if (array[q].getSymbol() == 'X' || array[q].getSymbol() == 'x'
+            || array[q].getSymbol() == 'Х' || array[q].getSymbol() == 'х') {
+                if (array[q+1].getSymbol() == 'S' || array[q+1].getSymbol() == 's')
+                return false;
+            }
+        }
+        return true;
     }
 
     public static Entity[] toArray(ArrayList<Entity> list) {
