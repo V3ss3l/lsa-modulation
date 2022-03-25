@@ -44,15 +44,15 @@ public class ModelingGsa {
             if (j == arrayEntity.length) return;
 
             i = searchXWithoutOutput(j);
-            System.out.println("Type condition for X" + arrayEntity[i].getStage() + ": "+" (if you want exit, type 2)");
+            System.out.println("Type condition for X" + arrayEntity[i].getStage() + ": " + " (if you want exit, type 2)");
             Scanner sc = new Scanner(System.in);
             var buff = sc.nextInt();
-            // вводимый символ, нужно проверка на то, что это число только 0 или 1
-            if(buff!=0 && buff!=1 && buff!=2){
+            // проверка на символы
+            if (buff != 0 && buff != 1 && buff != 2) {
                 System.out.println("[Error]: typed symbols arent 0 or 1, please try again");
                 writeStep();
             }
-            if(buff == 2) return;
+            if (buff == 2) return;
             if (buff == 0 && j != arrayEntity.length) j = searchS(j + 1);
             else if (j == arrayEntity.length) return;
             else j++;
@@ -84,7 +84,7 @@ public class ModelingGsa {
         return txt.toString();
     }
 
-    private int searchXWithoutOutput(int i){
+    private int searchXWithoutOutput(int i) {
         while (arrayEntity[i].getSymbol() != 'X' && arrayEntity[i].getSymbol() != 'x'
                 && arrayEntity[i].getSymbol() != 'х' && arrayEntity[i].getSymbol() != 'Х') {
             i++;
@@ -92,6 +92,7 @@ public class ModelingGsa {
         }
         return i;
     }
+
     private int searchX(int j) {
         while (arrayEntity[j].getSymbol() != 'X' && arrayEntity[j].getSymbol() != 'x'
                 && arrayEntity[j].getSymbol() != 'Х' && arrayEntity[j].getSymbol() != 'х') {

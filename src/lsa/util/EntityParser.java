@@ -19,7 +19,10 @@ public class EntityParser {
                     for (int i = 0; i < s.length(); i++) {
                         if (!isNumber && s.charAt(i) != 'S') {
                             isNumber = true;
-                            if (!Character.isDigit(s.charAt(i + 2))) {
+                            /*if (!Character.isDigit(s.charAt(i + 1))) {
+                                System.out.println("d");
+                            }*/
+                            if (!Character.isDigit(s.charAt(i + 1)) || !Character.isDigit(s.charAt(i))) {
                                 System.out.println("[Error]: next symbol is not a number, try again");
                                 return new Entity[]{};
                             } else number = Character.getNumericValue(s.charAt(i));
@@ -32,7 +35,7 @@ public class EntityParser {
                         else if (s.charAt(i) == 'Н' || s.charAt(i) == 'н') begin = true;
                         else if (s.charAt(i) == 'К' || s.charAt(i) == 'к') begin = false;
                         else {
-                            if (!Character.isDigit(s.charAt(i + 1))) {
+                            if (!Character.isDigit(s.charAt(i))) {
                                 System.out.println("[Error]: next symbol is not a number, try again");
                                 return new Entity[]{};
                             } else number = Character.getNumericValue(s.charAt(i));
@@ -43,7 +46,7 @@ public class EntityParser {
                         if (s.charAt(q) == 'X' || s.charAt(q) == 'x' || s.charAt(q) == 'Х' || s.charAt(q) == 'х')
                             buff = s.charAt(q);
                         else {
-                            if (!Character.isDigit(s.charAt(q + 1))) {
+                            if (!Character.isDigit(s.charAt(q))) {
                                 System.out.println("[Error]: next symbol is not a number, try again");
                                 return new Entity[]{};
                             } else number = Character.getNumericValue(s.charAt(q));
@@ -60,7 +63,7 @@ public class EntityParser {
                 isNumber = false;
             }
             Entity[] arr = toArray(list);
-            if(checkSAndW(arr)) return arr;
+            if (checkSAndW(arr)) return arr;
             else {
                 System.out.println("[Error]: symbol is not a start or end, try again");
                 return new Entity[]{};
@@ -89,9 +92,9 @@ public class EntityParser {
     private static boolean checkSAndW(Entity[] array) {
         for (var q = 0; q < array.length; q++) {
             if (array[q].getSymbol() == 'X' || array[q].getSymbol() == 'x'
-            || array[q].getSymbol() == 'Х' || array[q].getSymbol() == 'х') {
-                if (array[q+1].getSymbol() == 'S' || array[q+1].getSymbol() == 's')
-                return false;
+                    || array[q].getSymbol() == 'Х' || array[q].getSymbol() == 'х') {
+                if (!(array[q + 1].getSymbol() == 'S' || array[q + 1].getSymbol() == 's'))
+                    return false;
             }
         }
         return true;

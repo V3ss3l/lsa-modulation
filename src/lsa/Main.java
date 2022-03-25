@@ -73,6 +73,7 @@ public class Main {
             str = sc.nextLine();
             if (!str.equals("1") && !str.equals("2") || str.length() < 1) {
                 System.out.println("[Error]: String is empty or full of letters, try again");
+
             } else break;
         }
         if (str.equals("1")) {
