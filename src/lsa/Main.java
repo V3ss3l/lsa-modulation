@@ -77,7 +77,7 @@ public class Main {
             } else break;
         }
         if (str.equals("1")) {
-            System.out.println("Type model: (like X10 or S1 or Y51 or W or Yn or Yk)");
+            System.out.println("Type model: (like X10 or S10 or Y51 or W or Yn or Yk)");
             var strOfModel = sc.nextLine();
             arr = beginData.getFromUser(strOfModel);
         } else if (str.equals("2")) {

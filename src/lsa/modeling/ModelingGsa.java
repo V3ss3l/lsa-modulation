@@ -44,19 +44,29 @@ public class ModelingGsa {
             if (j == arrayEntity.length) return;
 
             i = searchXWithoutOutput(j);
-            System.out.println("Type condition for X" + arrayEntity[i].getStage() + ": " + " (if you want exit, type 2)");
+            System.out.println("Type condition for X" + arrayEntity[i].getStage() + ": " + " (if you want exit, type 2 | you can type only ONE symbol)");
             Scanner sc = new Scanner(System.in);
-            var buff = sc.nextInt();
             // проверка на символы
-            if (buff != 0 && buff != 1 && buff != 2) {
+            String buff = "";
+            boolean flag = true;
+            while (flag) {
+                buff = sc.nextLine();
+                if (buff.length() > 1 || buff.length() < 1) {
+                    System.out.println("[Error]: string has more than 1 symbol or has not symbols");
+                } else {
+                    if (!Character.isDigit(buff.charAt(0)))
+                        System.out.println("[Error]: condition is not a number, try again");
+                    else break;
+                }
+            }
+            if (!buff.equals("0") && !buff.equals("1") && !buff.equals("2")) {
                 System.out.println("[Error]: typed symbols arent 0 or 1, please try again");
                 writeStep();
             }
-            if (buff == 2) return;
-            if (buff == 0 && j != arrayEntity.length) j = searchS(j + 1);
+            if (buff.equals("2")) return;
+            if (buff.equals("0") && j != arrayEntity.length) j = searchS(j + 1);
             else if (j == arrayEntity.length) return;
             else j++;
-
             if (arrayEntity[j].getSymbol() != 'Y' && !arrayEntity[j].isBegin() && arrayEntity[j].getStage() == 0)
                 break;
         }

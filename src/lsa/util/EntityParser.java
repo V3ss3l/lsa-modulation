@@ -19,9 +19,6 @@ public class EntityParser {
                     for (int i = 0; i < s.length(); i++) {
                         if (!isNumber && s.charAt(i) != 'S') {
                             isNumber = true;
-                            /*if (!Character.isDigit(s.charAt(i + 1))) {
-                                System.out.println("d");
-                            }*/
                             if (!Character.isDigit(s.charAt(i + 1)) || !Character.isDigit(s.charAt(i))) {
                                 System.out.println("[Error]: next symbol is not a number, try again");
                                 return new Entity[]{};
