@@ -26,8 +26,9 @@ public class Main {
         switch (choice) {
             case "1": {
                 model.writeStep();
-                System.out.println("Modeling is over");
+                System.out.println("\nModeling is over");
                 init();
+                break;
             }
             case "2": {
                 System.out.println("Type conditions: (if you want to exit, type |exit|)");
@@ -42,17 +43,20 @@ public class Main {
                     }
                 }
                 model.getResultFromString(conditions);
-                System.out.println("Modeling is over");
+                System.out.println("\nModeling is over");
                 init();
+                break;
             }
             case "3": {
                 model.iteratingLogicalConditions();
-                System.out.println("Modeling is over");
+                System.out.println("\nModeling is over");
                 init();
+                break;
             }
             case "4": {
                 typeModel();
                 init();
+                break;
             }
             case "5": {
                 System.out.println("Program is over, shutting down...");
@@ -61,6 +65,7 @@ public class Main {
             default: {
                 System.out.println("Where is an action?");
                 init();
+                break;
             }
         }
     }
@@ -77,21 +82,23 @@ public class Main {
             } else break;
         }
         if (str.equals("1")) {
-            System.out.println("Type model: (like X10 or S10 or Y51 or W or Yn or Yk)");
+            System.out.println("Type model: (like \nX1(X - is condition, 1 - is stage of condition) or \nS(S - is arrow)5(5 - is stage of arrow)1(1 - is down arrow and 0 - is up arrow) or \nY5(Y - value and 5 - is stage of value) or \nW(unconditional jump) or Yn(start of algorithm) or Yk(end pf algorithm))");
             var strOfModel = sc.nextLine();
             arr = beginData.getFromUser(strOfModel);
         } else if (str.equals("2")) {
-            System.out.println("Type name of file: " + "\n1. ЛСАБарановскийДА.txt" + "\n2. ЛСАБарановскийДВ.txt");
+            System.out.println("Type name of file: " + "\n1. ЛСА-БарановскийДА.txt" + "\n2. ЛСА-АнисимовГА.txt" + "\n3. ЛСА-ЗверевСИ.txt" + "\n4. ЛСА-ЩурАА.txt");
             String fileName = "";
             while (true) {
                 fileName = sc.nextLine();
-                if (!fileName.equals("1") && !fileName.equals("2") || fileName.length() < 1)
+                if (!fileName.equals("1") && !fileName.equals("2") && !fileName.equals("3") && !fileName.equals("4") || fileName.length() < 1)
                     System.out.println("[Error]: String is empty or full of letters, try again");
                 else break;
             }
             try {
-                if (fileName.equals("1")) arr = beginData.getFromFile("ЛСАБарановскийДА.txt");
-                if (fileName.equals("2")) arr = beginData.getFromFile("ЛСАБарановскийДВ.txt");
+                if (fileName.equals("1")) arr = beginData.getFromFile("ЛСА-БарановскийДА.txt");
+                if (fileName.equals("2")) arr = beginData.getFromFile("ЛСА-АнисимовГА.txt");
+                if (fileName.equals("3")) arr = beginData.getFromFile("ЛСА-ЗверевСИ.txt");
+                if (fileName.equals("4")) arr = beginData.getFromFile("ЛСА-ЩурАА.txt");
             } catch (IOException e) {
                 e.printStackTrace();
             }

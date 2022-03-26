@@ -59,7 +59,7 @@ public class EntityParser {
                 begin = false;
                 isNumber = false;
             }
-            Entity[] arr = toArray(list);
+            var arr = toArray(list);
             if (checkSAndW(arr)) return arr;
             else {
                 System.out.println("[Error]: symbol is not a start or end, try again");
